@@ -14,4 +14,3 @@ class DiagnosisResultDetailView(generics.RetrieveDestroyAPIView):
     queryset = DiagnosisResult.objects.all()
     serializer_class = DiagnosisResultSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
