@@ -6,3 +6,8 @@ from .serializers import DiagnosisResultSerializer
 class DiagnosisRequestCreateView(generics.ListCreateAPIView):
     queryset = DiagnosisRequest.objects.all()
     serializer_class = DiagnosisResultSerializer
+
+
+class DiagnosisDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = DiagnosisResultSerializer
+    queryset = DiagnosisRequest.objects.all()
