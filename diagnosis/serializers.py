@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import DiagnosisRequest
 
 
-class DiagnosisResultSerializer(serializers.ModelSerializer):
+class DiagnosisRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiagnosisRequest
         fields = "__all__"
