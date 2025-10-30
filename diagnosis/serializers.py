@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import DiagnosisRequest
 from django.contrib.humanize.templatetags.humanize import naturaltime
-from django.db.models import Count
 
 
 class DiagnosisRequestSerializer(serializers.ModelSerializer):
