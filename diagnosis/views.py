@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions, status, filters
 from django.db.models import Count
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import DiagnosisRequest
 from .serializers import DiagnosisRequestSerializer
 from diagnosis_result.serializers import DiagnosisResultSerializer as ResultSerializer
@@ -16,6 +17,17 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
     queryset = DiagnosisRequest.objects.annotate(
         posts_count=Count('user__diagnosisrequest')
     ).order_by('-created_at')
+    
+    filter_backends = [
+        filters.OrderingFilter,
+        filters.SearchFilter,
+        DjangoFilterBackend,
+    ]
+
+    filterset_fields = [
+        'car_make',
+        'car_model'
+    ]
     serializer_class = DiagnosisRequestSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
