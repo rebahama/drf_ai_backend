@@ -17,7 +17,7 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
     queryset = DiagnosisRequest.objects.annotate(
         posts_count=Count('user__diagnosisrequest')
     ).order_by('-created_at')
-  
+
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,

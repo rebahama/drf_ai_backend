@@ -6,11 +6,13 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 class DiagnosisResultSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
     request_info = serializers.SerializerMethodField()
+    original_prompt = serializers.SerializerMethodField()
 
     class Meta:
         model = DiagnosisResult
         fields = [
             'id',
+            'original_prompt',
             'result',
             'request',
             'request_info',
@@ -25,3 +27,6 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
         if obj.request:
             return f"{obj.request.car_make} {obj.request.car_model} ({obj.request.car_year})"
         return None
+  
+    def get_original_prompt(self, obj):
+        return obj.request.problem_description
