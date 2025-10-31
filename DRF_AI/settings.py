@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import re
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,13 +25,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.exists('env.py'):
     import env
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+
+DEBUG = 'DEV' in os.environ
 
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://mechanic-ai-backend-30fbbccc99ba.herokuapp.com',
+    'localhost'
+]
+
+if 'CLIENT_ORIGIN' in os.environ:
+    extracted_url = re.match(r'^.+-',
+                             os.environ.get('CLIENT_ORIGIN', ''),
+                             re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -49,6 +65,9 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    'dj_rest_auth.registration',
+    'corsheaders',
+
 
     "diagnosis",
     "diagnosis_result",
@@ -88,6 +107,7 @@ JWT_AUTH_SAMESITE = 'None'
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -121,11 +141,16 @@ WSGI_APPLICATION = "DRF_AI.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# Seperate the database for local and for Heroku
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': ({
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    } if 'DEV' in os.environ else dj_database_url.parse(
+        os.environ.get('DATABASE_URL')
+    ))
 }
 
 
