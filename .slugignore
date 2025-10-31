@@ -1,0 +1,8 @@
+*.pyc
+__pycache__/
+.git/
+notebooks/
+tests/
+docs/
+.env
+*.ipynb
