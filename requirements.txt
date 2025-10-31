@@ -6,8 +6,7 @@ django-cors-headers==4.9.0
 djangorestframework_simplejwt==5.5.1
 psycopg2==2.9.11
 gunicorn==23.0.0
-torch==2.7.1+cpu
--f https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==2.7.1
 google-ai-generativelanguage==0.6.15
 httpx==0.28.1
 requests==2.32.4
