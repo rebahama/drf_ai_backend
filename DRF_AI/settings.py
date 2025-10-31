@@ -32,7 +32,8 @@ DEBUG = 'DEV' in os.environ
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'), 'localhost']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+
 
 if 'CLIENT_ORIGIN' in os.environ:
     extracted_url = re.match(r'^.+-',
