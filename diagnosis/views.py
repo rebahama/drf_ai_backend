@@ -47,8 +47,10 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
         """
 
         try:
+            print("⚙️ Starting Gemini call...")
             model = genai.GenerativeModel("gemini-2.5-flash")
             response = model.generate_content(prompt)
+            print("✅ Gemini call finished.")
             ai_text = response.text if hasattr(response, "text") else str(response)
             logger.info(f"✅ Gemini response: {ai_text[:200]}...")  # logs first 200 chars
         except Exception as e:
