@@ -1,4 +1,3 @@
-# diagnosis/admin.py
 from django.contrib import admin
 from .models import DiagnosisRequest
 from diagnosis_result.models import DiagnosisResult
@@ -14,7 +13,6 @@ class DiagnosisRequestAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        # Only generate AI result on creation, not edit
         if not change:
             prompt = f"""
             Car Make: {obj.car_make}

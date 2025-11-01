@@ -52,11 +52,8 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
             response = model.generate_content(prompt)
             print("✅ Gemini call finished.")
             ai_text = response.text if hasattr(response, "text") else str(response)
-            logger.info(f"✅ Gemini response: {ai_text[:200]}...")  # logs first 200 chars
         except Exception as e:
             ai_text = f"Error generating AI result: {str(e)}"
-            logger.error(f"❌ Gemini error: {e}", exc_info=True)
-            print(f"❌ Gemini error: {e}")  # visible in Heroku logs too
 
         DiagnosisResult.objects.create(
             request=diagnosis_request,
