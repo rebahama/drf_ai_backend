@@ -26,7 +26,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/test-gemini/', test_gemini),
     path('dj-rest-auth/logout', logout_route),
-    path('api/auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path("", include('diagnosis.urls')),
     path("", include('diagnosis_result.urls')),
