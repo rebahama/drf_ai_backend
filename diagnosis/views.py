@@ -9,6 +9,9 @@ from diagnosis_result.models import DiagnosisResult
 from DRF_AI.permissions import IsOwnerOrReadOnly
 import google.generativeai as genai
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 genai.configure(api_key=settings.GEMINI_API_KEY)
@@ -46,9 +49,12 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
         try:
             model = genai.GenerativeModel("gemini-2.5-flash")
             response = model.generate_content(prompt)
-            ai_text = response.text if response else "No AI response"
+            ai_text = response.text if hasattr(response, "text") else str(response)
+            logger.info(f"✅ Gemini response: {ai_text[:200]}...")  # logs first 200 chars
         except Exception as e:
             ai_text = f"Error generating AI result: {str(e)}"
+            logger.error(f"❌ Gemini error: {e}", exc_info=True)
+            print(f"❌ Gemini error: {e}")  # visible in Heroku logs too
 
         DiagnosisResult.objects.create(
             request=diagnosis_request,
