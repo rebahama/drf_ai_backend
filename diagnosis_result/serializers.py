@@ -27,6 +27,6 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
         if obj.request:
             return f"{obj.request.car_make} {obj.request.car_model} ({obj.request.car_year})"
         return None
-  
+
     def get_original_prompt(self, obj):
         return obj.request.problem_description
