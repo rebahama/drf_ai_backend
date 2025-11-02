@@ -40,6 +40,7 @@ if "CLIENT_ORIGIN_DEV" in os.environ:
     ).group(0)
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+        r"^https://.*\.app\.github\.dev$",
     ]
 
 CORS_ALLOW_CREDENTIALS = True
