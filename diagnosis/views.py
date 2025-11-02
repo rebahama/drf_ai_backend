@@ -6,7 +6,7 @@ from .models import DiagnosisRequest
 from .serializers import DiagnosisRequestSerializer
 from diagnosis_result.serializers import DiagnosisResultSerializer as ResultSerializer
 from diagnosis_result.models import DiagnosisResult
-from DRF_AI.permissions import IsOwnerOrReadOnly
+from DRF_AI.permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 import google.generativeai as genai
 from django.conf import settings
 import logging
@@ -33,7 +33,7 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
         'car_model'
     ]
     serializer_class = DiagnosisRequestSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def perform_create(self, serializer):
         diagnosis_request = serializer.save(user=self.request.user)
@@ -47,10 +47,8 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
         """
 
         try:
-            print("⚙️ Starting Gemini call...")
             model = genai.GenerativeModel("gemini-2.5-flash")
             response = model.generate_content(prompt)
-            print("✅ Gemini call finished.")
             ai_text = response.text if hasattr(response, "text") else str(response)
         except Exception as e:
             ai_text = f"Error generating AI result: {str(e)}"
@@ -73,4 +71,4 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
 class DiagnosisDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = DiagnosisRequest.objects.all()
     serializer_class = DiagnosisRequestSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]

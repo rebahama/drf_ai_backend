@@ -12,3 +12,16 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return obj.request.user == request.user
 
         return getattr(obj, "user", None) == request.user
+
+
+class IsAdminOrReadOnly(permissions.BasePermission):
+    """
+    Only admin users can edit or delete.
+    Others can only read.
+    """
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return request.user and request.user.is_staff
