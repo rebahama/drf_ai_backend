@@ -8,12 +8,16 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
     request_info = serializers.SerializerMethodField()
     original_prompt = serializers.SerializerMethodField()
     owner = serializers.ReadOnlyField(source='request.user.username')
+    car_model = serializers.ReadOnlyField(source='request.car_model')
+    car_make = serializers.ReadOnlyField(source='request.car_make')
 
     class Meta:
         model = DiagnosisResult
         fields = [
             'id',
             'original_prompt',
+            'car_model',
+            'car_make',
             'owner',
             'result',
             'request',

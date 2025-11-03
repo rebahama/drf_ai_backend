@@ -16,6 +16,18 @@ class DiagnosisResultView(generics.ListAPIView):
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
+    filterset_fields = [
+        'request__car_model',
+        'request__car_make',
+    ]
+    search_fields = [
+        'result',
+        'request__car_make',
+        'request__car_model',
+        'request__problem_description',
+        'request__user__username',
+    ]
+
     serializer_class = DiagnosisResultSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 

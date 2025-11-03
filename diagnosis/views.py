@@ -32,6 +32,7 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
         'car_make',
         'car_model'
     ]
+
     serializer_class = DiagnosisRequestSerializer
     permission_classes = [IsAdminOrReadOnly]
 
