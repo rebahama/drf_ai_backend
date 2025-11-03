@@ -7,12 +7,14 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
     request_info = serializers.SerializerMethodField()
     original_prompt = serializers.SerializerMethodField()
+    owner = serializers.ReadOnlyField(source='request.user.username')
 
     class Meta:
         model = DiagnosisResult
         fields = [
             'id',
             'original_prompt',
+            'owner',
             'result',
             'request',
             'request_info',
