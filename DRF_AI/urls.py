@@ -18,16 +18,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import root_route
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
 
 urlpatterns = [
+    path("", root_route),
     path("", root_route),
     path("admin/", admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    path("dj-rest-auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("", include('diagnosis.urls')),
     path("", include('diagnosis_result.urls')),
 ]

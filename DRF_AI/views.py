@@ -1,5 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
 from .settings import (JWT_AUTH_COOKIE,
                        JWT_AUTH_REFRESH_COOKIE,
                        JWT_AUTH_SAMESITE,
@@ -36,3 +38,16 @@ def logout_route(request):
 
     )
     return respone
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+   
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        tokens = serializer.validated_data
+
+        response = Response(tokens)
+        return response

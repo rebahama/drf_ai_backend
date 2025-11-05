@@ -53,10 +53,6 @@ if "CLIENT_ORIGIN" in os.environ:
 CORS_ALLOW_CREDENTIALS = True
 
 
-
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,17 +79,12 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [(
-        'rest_framework.authentication.SessionAuthentication'
-        if 'DEV' in os.environ
-        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    )],
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10,
-    "DATETIME_FORMAT": "%d %b %Y",
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
 }
 
 
@@ -110,10 +101,6 @@ JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"
 JWT_AUTH_SAMESITE = "None"
 JWT_AUTH_SECURE = True
 
-REST_AUTH_SERIALIZERS = {
-    "LOGIN_SERIALIZER": "DRF_AI.serializers.CustomLoginSerializer",
-    "JWT_SERIALIZER": "DRF_AI.serializers.CustomJWTSerializer",
-}
 
 
 MIDDLEWARE = [
