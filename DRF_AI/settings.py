@@ -24,11 +24,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    os.environ.get("CLIENT_ORIGIN_DEV", "http://localhost:3000"),  # dev frontend
-]
-if not DEBUG and "CLIENT_ORIGIN" in os.environ:
-    CORS_ALLOWED_ORIGINS.append(os.environ["CLIENT_ORIGIN"])  # production frontend
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
