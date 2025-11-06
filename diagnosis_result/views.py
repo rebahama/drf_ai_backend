@@ -19,6 +19,8 @@ class DiagnosisResultView(generics.ListAPIView):
     filterset_fields = [
         'request__car_model',
         'request__car_make',
+        'request__user__username',
+        'request__user__id',
     ]
     search_fields = [
         'result',
