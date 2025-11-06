@@ -8,6 +8,7 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
     request_info = serializers.SerializerMethodField()
     original_prompt = serializers.SerializerMethodField()
     owner = serializers.ReadOnlyField(source='request.user.username')
+    user = serializers.ReadOnlyField(source='request.user.id')
     car_model = serializers.ReadOnlyField(source='request.car_model')
     car_make = serializers.ReadOnlyField(source='request.car_make')
 
@@ -19,6 +20,7 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
             'car_model',
             'car_make',
             'owner',
+            'user',
             'result',
             'request',
             'request_info',
