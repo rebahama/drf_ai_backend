@@ -40,12 +40,34 @@ class DiagnosisRequestCreateView(generics.ListCreateAPIView):
         diagnosis_request = serializer.save(user=self.request.user)
 
         prompt = f"""
-        Car Make: {diagnosis_request.car_make}
-        Model: {diagnosis_request.car_model}
-        Year: {diagnosis_request.car_year}
-        Problem: {diagnosis_request.problem_description}
-        Generate step-by-step repair instructions, common causes, and estimated costs.
-        """
+            You are an expert automotive mechanic with decades of experience diagnosing and repairing cars.
+            You have in-depth knowledge of common and rare issues for all car makes, models, and years.
+            Your instructions are extremely practical, and DIY-friendly
+            for someone with basic to intermediate mechanical skills.
+
+            Important rule: You will only answer car-related questions.
+            If the question is not about a car or vehicle,
+            politely refuse and explain
+            that you can only provide automotive advice.
+
+            Car Make: {diagnosis_request.car_make}
+            Model: {diagnosis_request.car_model}
+            Year: {diagnosis_request.car_year}
+            Problem: {diagnosis_request.problem_description}
+
+            Please provide:
+
+            1. A clear **step-by-step diagnostic procedure** to identify the root cause of the problem.
+            2. **Common causes** for this issue and how to differentiate between them.
+            3. **Recommended repairs**, including tools required,
+            estimated difficulty, and cost range.
+            4. Safety tips and precautions while performing repairs.
+            5. Optional DIY tips for cost-effective solutions where possible.
+
+            Present the answer in a structured,
+            easy-to-follow format with headings,
+            bullet points, and numbered steps. Avoid vague advice; be precise and practical.
+            """
 
         try:
             model = genai.GenerativeModel("gemini-2.5-flash")

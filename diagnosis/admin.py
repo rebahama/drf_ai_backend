@@ -6,6 +6,7 @@ from django.conf import settings
 
 genai.configure(api_key=settings.GEMINI_API_KEY)
 
+
 @admin.register(DiagnosisRequest)
 class DiagnosisRequestAdmin(admin.ModelAdmin):
     list_display = ('user', 'car_make', 'car_model', 'created_at')
@@ -19,7 +20,8 @@ class DiagnosisRequestAdmin(admin.ModelAdmin):
             Model: {obj.car_model}
             Year: {obj.car_year}
             Problem: {obj.problem_description}
-            Generate step-by-step repair instructions, common causes, and estimated costs.
+            Generate step-by-step repair instructions,
+            common causes, and estimated costs.
             """
             try:
                 model = genai.GenerativeModel("gemini-2.5-flash")
