@@ -9,6 +9,7 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
     original_prompt = serializers.SerializerMethodField()
     owner = serializers.ReadOnlyField(source='request.user.username')
     user = serializers.ReadOnlyField(source='request.user.id')
+    is_owner = serializers.SerializerMethodField()
     car_model = serializers.ReadOnlyField(source='request.car_model')
     car_make = serializers.ReadOnlyField(source='request.car_make')
 
@@ -20,6 +21,7 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
             'car_model',
             'car_make',
             'owner',
+            'is_owner',
             'user',
             'result',
             'request',
@@ -29,6 +31,11 @@ class DiagnosisResultSerializer(serializers.ModelSerializer):
 
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
+    
+    def get_is_owner(self, obj):
+        """Check if the logged-in user created the request."""
+        request = self.context.get('request')
+        return request and request.user == obj.request.user
 
     def get_request_info(self, obj):
         """Return a simple string showing car info from related request"""
