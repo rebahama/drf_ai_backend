@@ -1,131 +1,113 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+## Smart Mechanic backend
+The backend for Smart mechanig was build using Django and Django rest framework. This api will make it possible to Create/delete a post and  Register and create an account, Gemini is used for taking input and request and to display the result
 
-Welcome USER_NAME,
+# Website link
+* [Deployed website](https://mechanic-ai-backend-30fbbccc99ba.herokuapp.com/)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+# Technology 
 
-## Gitpod Reminders
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+* Django 5.2.7 – latest stable version. Compatible with DRF 3.16.1.
 
-`python3 -m http.server`
+* dj-rest-auth + allauth – handles authentication and registration endpoints.
 
-A blue button should appear to click: _Make Public_,
+* djangorestframework_simplejwt – JWT authentication.
 
-Another blue button should appear to click: _Open Browser_.
+* psycopg2 – PostgreSQL database adapter.
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+* gunicorn – for production deployment.
 
-A blue button should appear to click: _Make Public_,
+* Google Generative AI libraries – to integrate AI-based solutions.
 
-Another blue button should appear to click: _Open Browser_.
+* Heroku was used for deployment.
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+* Github was used for develompment.
 
-To log into the Heroku toolbelt CLI:
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+# Libraries and deployment
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+## Deployment
 
-### Connecting your Mongo database
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+1. Install Django 5.2.7
+pip3 install "Django==5.2.7"
 
-------
+2. Install Pillow for image handling
+pip3 install Pillow
 
-## Release History
+3. Install Django REST Framework
+pip3 install djangorestframework==3.16.1
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+4. Install dj-rest-auth for authentication endpoints
+pip3 install dj-rest-auth==7.0.1
 
-**June 18, 2024,** Add Mongo back into template
+5. Install Django Filter for API query filtering
+pip3 install django-filter==25.2
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+6. Install dj-rest-auth with social authentication
+pip3 install "dj-rest-auth[with_social]"
 
-**May 28 2024:** Fix Mongo and Links installs
+7. Install JWT support
+pip3 install djangorestframework-simplejwt==5.5.1
 
-**April 26 2024:** Update node version to 16
+8. Install Django Allauth (required for social auth)
+pip3 install django-allauth==65.13.0
 
-**September 20 2023:** Update Python version to 3.9.17.
+9. Install PostgreSQL adapter and database URL helper
+pip3 install psycopg2==2.9.11 dj-database-url==3.0.1
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+10. Install Gunicorn (for deployment)
+pip3 install gunicorn==23.0.0
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+11. Install CORS headers (if frontend is served separately)
+pip3 install django-cors-headers==4.9.0
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+12. Install Google Generative AI libraries (for AI integration)
+* pip3 install google-ai-generativelanguage==0.6.15
+* pip3 install google-api-core==2.28.1
+* pip3 install google-api-python-client==2.185.0
+* pip3 install google-auth==2.42.1
+* pip3 install google-auth-httplib2==0.2.0
+* pip3 install google-generativeai==0.8.5
+* pip3 install googleapis-common-protos==1.71.0
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+13. pip3 freeze > requirements.txt
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+14. Create a Procfile in the main directory of the project and inside add the following line:
+release: python manage.py makemigrations && python manage.py migrate
+web: gunicorn DRF_AI.wsgi
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+# Deployment
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+1. Go to Heroku and create a new app.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+2. After creating a new app, go to "resources" and type " Heroky postgres" and add it.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+3. Go to settings and scroll down to "config vars" and a DATABASE_URL will be created for the database.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+4. Create a config var named CLOUDINARY_URL and paste in the api key from Cloudinary.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+5. Create a config var named SECRET_KEY and paste in a password.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+6. Add DISABLE_COLLECTSTATIC and set it to 1.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+7. Connect your Heroku with Github and finally click deploy.
 
-------
 
-## FAQ about the uptime script
 
-**Why have you added this script?**
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+# Develop in local enviorment
 
-**How will this affect me?**
+1. Create a python file called env.py and import os
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+2. Add os.environ["DATABASE_URL"] = value from heroku
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+3. Add os.environ["SECRET_KEY"] = value from heroku
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+4. Add os.environ["DEV"] = '1'
 
-**So….?**
+5. Add os.environ["GEMINI_API_KEY"] = value from heroku
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+6. Type python3 manage.py runserver to start up the browser.
